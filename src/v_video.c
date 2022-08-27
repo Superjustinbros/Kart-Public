@@ -1568,7 +1568,6 @@ const char *V_ApproximateSkinColorCode(INT32 color)
 	return cstart;
 }
 
-
 // Writes a single character (draw WHITE if bit 7 set)
 //
 void V_DrawCharacter(INT32 x, INT32 y, INT32 c, boolean lowercaseallowed)
