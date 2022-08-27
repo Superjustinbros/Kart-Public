@@ -36,6 +36,7 @@ set(SRB2_SDL2_SOURCES
 	i_system.c
 	i_ttf.c
 	i_video.c
+	i_threads.c
 	#IMG_xpm.c
 	ogl_sdl.c
 
@@ -184,6 +185,14 @@ if(${SDL2_FOUND})
 		)
 	endif()
 
+	if(${CMAKE_SYSTEM} MATCHES Windows AND ${CMAKE_C_COMPILER_ID} MATCHES "GNU" AND ${SRB2_SYSTEM_BITS} EQUAL 32)
+		target_link_libraries(SRB2SDL2 PRIVATE
+			"${CMAKE_CURRENT_SOURCE_DIR}/../../libs/drmingw/lib/win32/libexchndl.a"
+			"${CMAKE_CURRENT_SOURCE_DIR}/../../libs/drmingw/lib/win32/libmgwhelp.a"
+		)
+		target_include_directories(SRB2SDL2 PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../../libs/drmingw/include")
+	endif()
+
 	#target_link_libraries(SRB2SDL2 PRIVATE SRB2Core)
 
 	if(${SRB2_USEASM})
@@ -261,6 +270,7 @@ if(${SDL2_FOUND})
 
 	target_compile_definitions(SRB2SDL2 PRIVATE
 		-DHAVE_SDL
+		-DHAVE_THREADS
 	)
 
 	## strip debug symbols into separate file when using gcc
