@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 // Copyright (C) 2006      by Graue.
 // Copyright (C) 2006-2018 by Sonic Team Junior.
+// Copyright (C) 2019      by James R.
 //
 // This program is free software distributed under the
 // terms of the GNU General Public License, version 2.
@@ -15,7 +16,7 @@
 #include <string.h>
 #include "doomdef.h"
 
-#if !defined (__APPLE__)
+#ifndef SRB2_HAVE_STRLCPY
 
 // Like the OpenBSD version, but it doesn't check for src not being a valid
 // C string.
@@ -50,3 +51,5 @@ size_t strlcpy(char *dst, const char *src, size_t siz)
 }
 
 #endif
+
+#include "strcasestr.c"

@@ -139,6 +139,9 @@ typedef long ssize_t;
 	#define strlwr                  _strlwr
 #endif
 
+char *strcasestr(const char *in, const char *what);
+#define stristr strcasestr
+
 #if defined (macintosh) //|| defined (__APPLE__) //skip all boolean/Boolean crap
 	#define true 1
 	#define false 0
@@ -161,6 +164,15 @@ typedef long ssize_t;
 #define HAVE_DOSSTR_FUNCS
 #endif
 
+#if defined (__APPLE__)
+	#define SRB2_HAVE_STRLCPY
+#elif defined (__GLIBC_PREREQ)
+	// glibc 2.38: added strlcpy and strlcat to _DEFAULT_SOURCE
+	#if __GLIBC_PREREQ(2, 38)
+		#define SRB2_HAVE_STRLCPY
+	#endif
+#endif
+
 #ifndef HAVE_DOSSTR_FUNCS
 int strupr(char *n); // from dosstr.c
 int strlwr(char *n); // from dosstr.c
@@ -168,7 +180,7 @@ int strlwr(char *n); // from dosstr.c
 
 #include <stddef.h> // for size_t
 
-#ifndef __APPLE__
+#ifndef SRB2_HAVE_STRLCPY
 size_t strlcat(char *dst, const char *src, size_t siz);
 size_t strlcpy(char *dst, const char *src, size_t siz);
 #endif
